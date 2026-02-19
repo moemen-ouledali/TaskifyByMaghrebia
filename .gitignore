@@ -20,3 +20,8 @@ dist
 build
 .next
 coverage
+
+
+.env
+node_modules
+dist
