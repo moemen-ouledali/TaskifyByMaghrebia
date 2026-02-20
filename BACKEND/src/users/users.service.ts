@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User, UserDocument } from './entity/users.entity';
+import { User, UserDocument } from './entities/users.entity';
 
 @Injectable()
 export class UsersService {
@@ -22,7 +22,7 @@ export class UsersService {
         role: createUserDto.role || 'EMPLOYEE',
       });
       return await createdUser.save();
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(`Error creating user: ${err.message}`);
     }
   }
@@ -37,7 +37,7 @@ export class UsersService {
       if (!isMatch) return null;
 
       return user;
-    } catch (err) {
+    } catch (err: any) {
       throw new Error(`Error finding user: ${err.message}`);
     }
   }

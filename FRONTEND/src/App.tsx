@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Auth/Login";
+import Login from "./pages/auth/Login";
 
 function DashboardPlaceholder() {
   return (
@@ -20,10 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
-
-        {/* ✅ Minimal: so navigate("/dashboard") works */}
         <Route path="/dashboard" element={<DashboardPlaceholder />} />
-
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
