@@ -15,13 +15,18 @@ export class AuthService {
 
   async login(user: any) {
     try {
-      const payload = { email: user.email, sub: user.id, role: user.role };
+      const payload = {
+        email: user.email,
+        sub: user._id.toString(), // ✅ correct for Mongoose
+        role: user.role,
+      };
+
       return {
         ...payload,
         token: this.jwtService.sign(payload),
       };
-    } catch (error) {
-      throw new Error(`Error logging in ${error} user ${error.message}`);
+    } catch (error: any) {
+      throw new Error(`Error logging in user: ${error.message}`);
     }
   }
 }
