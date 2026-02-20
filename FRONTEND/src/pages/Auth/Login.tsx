@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import axios from "axios";
 
-// ✅ Use public folder for logo instead
 // Put logo.png inside /public folder
 const logo = "/logo.png";
+
+// ✅ Read backend URL from Vite env (instead of hardcoding localhost)
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,13 +28,16 @@ const Login = () => {
       setError("");
 
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        `${API_URL}/auth/login`,
+        { email, password },
         {
-          email,
-          password,
+          // ✅ Safe to keep (even if you’re using JWT in localStorage)
+          // Helps later if you switch to cookies
+          withCredentials: true,
         }
       );
 
+      // ✅ Store token for protected calls later
       localStorage.setItem("token", response.data.token);
 
       navigate("/dashboard");
@@ -63,7 +68,8 @@ const Login = () => {
             Système Intelligent de Recommandation
           </p>
           <p className="text-white/60 max-w-md">
-            Optimisez la gestion de vos employés avec des recommandations basées sur l'intelligence artificielle.
+            Optimisez la gestion de vos employés avec des recommandations basées
+            sur l&apos;intelligence artificielle.
           </p>
 
           <div className="mt-12 flex justify-center gap-8 text-white/50">
@@ -102,8 +108,7 @@ const Login = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
-            {/* Role selector */}
+            {/* Role selector (demo only) */}
             <div>
               <label className="text-sm font-medium mb-1.5 block">
                 Rôle (démo)
@@ -121,9 +126,7 @@ const Login = () => {
 
             {/* Email */}
             <div>
-              <label className="text-sm font-medium mb-1.5 block">
-                Email
-              </label>
+              <label className="text-sm font-medium mb-1.5 block">Email</label>
               <div className="relative">
                 <Mail
                   size={16}
@@ -168,14 +171,12 @@ const Login = () => {
               </div>
             </div>
 
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 rounded-lg bg-[#A86520] text-white font-semibold hover:opacity-90"
+              className="w-full h-11 rounded-lg bg-[#A86520] text-white font-semibold hover:opacity-90 disabled:opacity-60"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
