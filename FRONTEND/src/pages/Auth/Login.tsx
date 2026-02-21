@@ -108,21 +108,8 @@ const Login = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Role selector (demo only) */}
-            <div>
-              <label className="text-sm font-medium mb-1.5 block">
-                Rôle (démo)
-              </label>
-              <select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                className="w-full h-11 rounded-lg border pl-3 pr-3 text-sm focus:border-[#A86520] focus:outline-none focus:ring-1 focus:ring-[#A86520]"
-              >
-                <option value="hr_manager">HR Manager</option>
-                <option value="admin">Admin</option>
-                <option value="employee">Employee</option>
-              </select>
-            </div>
+          
+        
 
             {/* Email */}
             <div>
